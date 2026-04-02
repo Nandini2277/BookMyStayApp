@@ -2,6 +2,41 @@
  * BookMyStay Application
  * Hotel Booking Management System
  */
+import java.util.HashMap;
+
+// Room Inventory class
+class RoomInventory {
+
+    private HashMap<String, Integer> inventory;
+
+    // Constructor initializes inventory
+    RoomInventory() {
+        inventory = new HashMap<>();
+
+        inventory.put("Single Room", 5);
+        inventory.put("Double Room", 3);
+        inventory.put("Suite Room", 2);
+    }
+
+    // Get availability
+    public int getAvailability(String roomType) {
+        return inventory.getOrDefault(roomType, 0);
+    }
+
+    // Update availability
+    public void updateAvailability(String roomType, int newCount) {
+        inventory.put(roomType, newCount);
+    }
+
+    // Display current inventory
+    public void displayInventory() {
+        System.out.println("Current Room Inventory:");
+
+        for (String roomType : inventory.keySet()) {
+            System.out.println(roomType + " : " + inventory.get(roomType));
+        }
+    }
+}
 
 abstract class Room {
 
@@ -56,6 +91,7 @@ public class BookMyStayApp {
 
         useCase1();
         useCase2();
+        useCase3();
 
     }
 
@@ -98,5 +134,25 @@ public class BookMyStayApp {
         suite.displayRoomDetails();
         System.out.println("Available: " + suiteAvailable);
         System.out.println();
+    }
+    public static void useCase3() {
+
+        System.out.println("BookMyStay - Version 3.0");
+        System.out.println("Centralized Room Inventory\n");
+
+        // Initialize inventory
+        RoomInventory inventory = new RoomInventory();
+
+        // Display inventory
+        inventory.displayInventory();
+
+        System.out.println("\nChecking availability for Double Room:");
+        System.out.println("Available: " + inventory.getAvailability("Double Room"));
+
+        // Update inventory
+        inventory.updateAvailability("Double Room", 2);
+
+        System.out.println("\nInventory after update:");
+        inventory.displayInventory();
     }
 }
